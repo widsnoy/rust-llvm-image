@@ -15,6 +15,7 @@ ENV PATH=/root/.cargo/bin:$PATH
 RUN rustup-init -y --default-toolchain stable \
     && rustup component add clippy rustfmt \
     && rustup target add x86_64-pc-windows-gnu \
+    && rustup target add x86_64-unknown-linux-gnu \
     && rustc --version \
     && cargo --version \
     && cargo clippy --version \
