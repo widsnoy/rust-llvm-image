@@ -13,7 +13,12 @@ RUN apk add --no-cache \
 ENV PATH=/root/.cargo/bin:$PATH
 
 RUN rustup-init -y --default-toolchain stable \
-    && rustup target add x86_64-pc-windows-gnu
+    && rustup component add clippy rustfmt \
+    && rustup target add x86_64-pc-windows-gnu \
+    && rustc --version \
+    && cargo --version \
+    && cargo clippy --version \
+    && cargo fmt --version
 
 ENV LLVM_SYS_211_PREFIX=/usr
 ENV LLVM_CONFIG_PATH=/usr/bin/llvm-config-21
