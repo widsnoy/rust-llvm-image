@@ -5,11 +5,15 @@ RUN apk add --no-cache \
     build-base \
     llvm21-dev \
     clang21-dev \
-    rust \
-    cargo \
-    rust-clippy \
-    rustfmt \
+    rustup \
+    mingw-w64-binutils \
+    mingw-w64-gcc \
     cargo-make
+
+ENV PATH=/root/.cargo/bin:$PATH
+
+RUN rustup-init -y --default-toolchain stable \
+    && rustup target add x86_64-pc-windows-gnu
 
 ENV LLVM_SYS_211_PREFIX=/usr
 ENV LLVM_CONFIG_PATH=/usr/bin/llvm-config-21
