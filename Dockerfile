@@ -10,12 +10,16 @@ RUN apk add --no-cache \
     mingw-w64-gcc \
     cargo-make
 
-ENV PATH=/root/.cargo/bin:$PATH
+ENV RUSTUP_HOME=/usr/local/rustup
+ENV CARGO_HOME=/usr/local/cargo
+ENV PATH=${CARGO_HOME}/bin:$PATH
+ENV RUSTUP_TOOLCHAIN=stable
 
 RUN rustup-init -y --default-toolchain stable \
     && rustup component add clippy rustfmt \
     && rustup target add x86_64-pc-windows-gnu \
     && rustup target add x86_64-unknown-linux-gnu \
+    && chmod -R a+w ${RUSTUP_HOME} ${CARGO_HOME} \
     && rustc --version \
     && cargo --version \
     && cargo clippy --version \
